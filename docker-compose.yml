@@ -15,7 +15,7 @@ services:
     image: mariadb
     restart: always
     environment:
-      MYSQL_DATABASE: sensordata
+      MYSQL_DATABASE: mydb
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: rootpassword

@@ -27,7 +27,8 @@ def welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     typeb = types.KeyboardButton('Получить информацию')
     markup.add(typeb) 
-    bot.send_message(message.chat.id, 'Чтобы получить данные по производственной линии, выберите команду /forecast или нажмите кнопку ниже.', reply_markup=markup)
+    bot.send_message(message.chat.id, '''Чтобы получить данные по производственной линии, выберите 
+                     команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
 def reply(message):
@@ -43,12 +44,14 @@ def reply(message):
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             typeb = types.KeyboardButton('Получить информацию')
             markup.add(typeb) 
-            bot.send_message(message.chat.id, 'Чтобы получить данные по производственной линии, выберите команду /forecast или нажмите кнопку ниже.', reply_markup=markup)
+            bot.send_message(message.chat.id, '''Чтобы получить данные по производственной линии, выберите команду /forecast 
+                             или нажмите кнопку ниже.''', reply_markup=markup)
 
         elif message.text != '':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             typeb = types.KeyboardButton('Получить информацию')
             markup.add(typeb) 
-            bot.send_message(message.chat.id, 'Не знаю что на это ответить.\nЧтобы получить данные по производственной линии, выберите команду /forecast или нажмите кнопку ниже.', reply_markup=markup)
+            bot.send_message(message.chat.id, '''Не знаю что на это ответить.\nЧтобы получить данные по производственной линии, 
+                             выберите команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
 
 bot.polling(non_stop=True)

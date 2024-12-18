@@ -5,18 +5,20 @@ import os
 
 app = Flask(__name__)
 
-mysql = MySQL(app)
-
 app.config['MYSQL_HOST'] = config.host
 app.config['MYSQL_USER'] = config.user
 app.config['MYSQL_PASSWORD'] = config.password
+app.config['MYSQL_ROOT_PASSWORD'] = config.rootpassword
 app.config['MYSQL_DB'] = config.database
+
+mysql = MySQL(app)
 
 @app.route('/add/<tagId>', methods=['POST'])
 def add(tagId: int):
     data = request.json
     cursor = mysql.connection.cursor()
-    cursor.execute("INSERT INTO sensordata(tag, value, sourcetime) VALUES(%s, %s, %s)", (tagId, data['value'], data['sourcetime']))
+    cursor.execute("INSERT INTO sensordata(tag, value, sourcetime) VALUES(%s, %s, %s)", 
+                   (tagId, data['value'], data['sourcetime']))
     mysql.connection.commit()
     cursor.close()
     return jsonify({'message': 'new data from sensor added'}), 201
