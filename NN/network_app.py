@@ -1,13 +1,9 @@
 import requests
-import pandas as pd
-import logging
 import os
 
 from flask import Flask, jsonify
 
 app = Flask(__name__)
-
-logger = logging.getLogger(__name__)
 
 @app.route('/forecast', methods=['GET'])
 def forecast():
