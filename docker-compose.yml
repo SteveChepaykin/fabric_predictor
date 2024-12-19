@@ -14,13 +14,13 @@ services:
     container_name: service_database
     image: mariadb
     restart: always
+    networks:
+      - servicenet
     environment:
       MYSQL_DATABASE: mydb
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: rootpassword
-    networks:
-      - servicenet
     ports:
       - "3000:3306"
     volumes:

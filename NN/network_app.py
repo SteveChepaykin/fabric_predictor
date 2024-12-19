@@ -1,38 +1,37 @@
 import requests
 import pandas as pd
+import logging
 import os
 
 from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+logger = logging.getLogger(__name__)
+
 @app.route('/forecast', methods=['GET'])
 def forecast():
-    allframesX = [];
+    allframesX = []
+    good = {1: 24, 2: 100, 3: 24}
+    listkey = list(good.keys())
+    isOk = True
 
-    # for tag in [1, 2, 4, 5, 7]:
-    #     frame = pd.DataFrame(requests.get("http://localhost:5050/get/{0}".format(tag)));
-    #     allframesX.add(frame)
+    for tag in listkey:
+        frame = requests.get("http://service_app:5050/get/{0}".format(tag)).json()
+        allframesX.append(frame[-1])
 
-    # frameY = pd.DataFrame(requests.get("http://localhost:5050/get/10"));
+    for i in range(len(good)):
+        if(allframesX[i]["value"] != good[listkey[i]]):
+            isOk = False
+            break
 
-    # result = allframesX[0]
-    # for i in range(1, len(allframesX)):
-    #     result =  result.merge(allframesX[i], on='source_time', how='inner', suffixes=(i, i + 1))
-    # frameX = result.index
-    # for c in result.columns:
-    #     if c.startswith("value"):
-    #         frameX[c] = result[c]
+    frameY = requests.get("http://service_app:5050/get/5").json()[-1];
+    if frameY["value"] != 1:
+        isOk = False;
 
-    # for i in range(5):
-    #     index = frameX.iloc[1:,:]
-    
-    # print(frameX)
-    # print(frameY)
-
-    return jsonify({"status": "OK"})
+    return jsonify({"status": "OK" if isOk else "BAD"});
 
 if __name__ == '__main__':
     HOST = os.environ.get('SERVER_HOST', '0.0.0.0')
-    PORT = os.environ.get('SERVER_PORT', '5050')
+    PORT = os.environ.get('SERVER_PORT', '5055')
     app.run(host=HOST, port=PORT, debug=True)

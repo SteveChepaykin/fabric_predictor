@@ -17,7 +17,7 @@ def welcome(message):
 
 @bot.message_handler(commands=['forecast'])
 def welcome(message):
-    resp = requests.get(f"http://{neural_host}:5050/forecast").json()
+    resp = requests.get(f"http://{neural_host}:5055/forecast").json()
     if resp["status"] == "OK":
         bot.send_message(message.chat.id, 'Все ок')
     elif resp["status"] == "BAD":
@@ -27,14 +27,13 @@ def welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     typeb = types.KeyboardButton('Получить информацию')
     markup.add(typeb) 
-    bot.send_message(message.chat.id, '''Чтобы получить данные по производственной линии, выберите 
-                     команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
+    bot.send_message(message.chat.id, '''Чтобы получить данные по производственной линии, выберите команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
 def reply(message):
     if message.chat.type == 'private':
         if message.text == 'Получить информацию':
-            resp = requests.get(f"http://{neural_host}:5050/forecast").json()
+            resp = requests.get(f"http://{neural_host}:5055/forecast").json()
             if resp["status"] == "OK":
                 bot.send_message(message.chat.id, 'Все ок')
             elif resp["status"] == "BAD":
@@ -44,14 +43,12 @@ def reply(message):
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             typeb = types.KeyboardButton('Получить информацию')
             markup.add(typeb) 
-            bot.send_message(message.chat.id, '''Чтобы получить данные по производственной линии, выберите команду /forecast 
-                             или нажмите кнопку ниже.''', reply_markup=markup)
+            bot.send_message(message.chat.id, '''Чтобы получить данные по производственной линии, выберите команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
 
         elif message.text != '':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             typeb = types.KeyboardButton('Получить информацию')
             markup.add(typeb) 
-            bot.send_message(message.chat.id, '''Не знаю что на это ответить.\nЧтобы получить данные по производственной линии, 
-                             выберите команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
+            bot.send_message(message.chat.id, '''Не знаю что на это ответить.\nЧтобы получить данные по производственной линии, выберите команду /forecast или нажмите кнопку ниже.''', reply_markup=markup)
 
 bot.polling(non_stop=True)

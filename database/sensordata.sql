@@ -3,6 +3,6 @@ use mydb;
 
 create table if not exists sensordata (
     tag int not null,
-    value int, 
-    sourcetime datetime default getdate()
+    value int,
+    sourcetime datetime default CURRENT_TIMESTAMP
 );

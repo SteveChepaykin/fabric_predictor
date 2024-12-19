@@ -8,7 +8,6 @@ app = Flask(__name__)
 app.config['MYSQL_HOST'] = config.host
 app.config['MYSQL_USER'] = config.user
 app.config['MYSQL_PASSWORD'] = config.password
-app.config['MYSQL_ROOT_PASSWORD'] = config.rootpassword
 app.config['MYSQL_DB'] = config.database
 
 mysql = MySQL(app)
@@ -26,7 +25,7 @@ def add(tagId: int):
 @app.route('/get/<tagId>', methods=['GET'])
 def users(tagId: int):
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE tag=%s", (tagId))
+    cursor.execute("SELECT * FROM sensordata WHERE tag=%s", (tagId))
     results = list(map(__cast2map, cursor.fetchall()))
     cursor.close()
     return results
