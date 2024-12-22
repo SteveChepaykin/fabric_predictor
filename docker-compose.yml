@@ -57,9 +57,6 @@ services:
     depends_on:
       - neural_network
 
-volumes:
-  shared-data:
-
 networks:
   servicenet:
     driver: bridge

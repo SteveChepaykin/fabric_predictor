@@ -13,7 +13,7 @@ def welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     weatherb = types.KeyboardButton('Получить информацию')
     markup.add(weatherb)
-    bot.send_message(message.chat.id, "Hi, {0.first_name}".format(message.from_user), reply_markup=markup)
+    bot.send_message(message.chat.id, "Здравствуй, {0.first_name}".format(message.from_user), reply_markup=markup)
 
 @bot.message_handler(commands=['forecast'])
 def welcome(message):

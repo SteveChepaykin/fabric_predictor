@@ -16,14 +16,18 @@ def forecast():
         frame = requests.get("http://service_app:5050/get/{0}".format(tag)).json()
         allframesX.append(frame[-1])
 
+    frameY = requests.get("http://service_app:5050/get/5").json()[-1];
+
+    cursum = 0
     for i in range(len(good)):
         if(allframesX[i]["value"] != good[listkey[i]]):
             isOk = False
             break
+        else:
+            cursum += allframesX[i]["value"]
 
-    frameY = requests.get("http://service_app:5050/get/5").json()[-1];
-    if frameY["value"] != 1:
-        isOk = False;
+    if frameY["value"] != cursum:
+        isOk = False
 
     return jsonify({"status": "OK" if isOk else "BAD"});
 
